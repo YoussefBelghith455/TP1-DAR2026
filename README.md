@@ -18,7 +18,7 @@ Cette commande confirme que Git est correctement installé et accessible depuis 
 
 ### Capture d'écran
 
-![Vérification de Git](captures/git-version.png)
+![Vérification de Git](captures/Activité 1-1/git-version.png)
 ## Étape 2 : Préparation de l'environnement Java
 
 Afin de vérifier l'installation de Java, nous avons exécuté les commandes suivantes dans le terminal Windows :
@@ -33,7 +33,7 @@ Cette version est compatible avec les exigences du TP, qui nécessite au minimum
 
 ### Capture d'écran
 
-![Vérification de Java](captures/java-version.png)
+![Vérification de Java](captures/Activité 1-1/java-version.png)
 ## Étape 3 : Création du serveur TCP
 
 Nous avons créé le package `serverPackage` contenant la classe `Server.java`.
@@ -48,7 +48,7 @@ Après avoir lancé le serveur, le message suivant apparaît dans la console :
 
 `Je suis un serveur en attente la connexion d'un client`
 
-![Serveur en attente](captures/server-console.png)
+![Serveur en attente](captures/Activité 1-1/server-console.png)
 
 ### Interprétation
 
@@ -67,7 +67,7 @@ Après avoir lancé le client, les messages suivants apparaissent dans la consol
 
 `je suis un client connecté`
 
-![Exécution du client](captures/client-console.png)
+![Exécution du client](captures/Activité 1-1/client-console.png)
 
 ### Interprétation
 
@@ -94,7 +94,7 @@ Une fois la connexion acceptée, les sockets sont fermées et le programme serve
 
 ### Capture d'écran du serveur connecté
 
-![Serveur connecté](captures/server-connected.png)
+![Serveur connecté](captures/Activité 1-1/server-connected.png)
 ### Test de connexion avec une adresse IP
 
 Dans cette étape, nous avons remplacé `localhost` par l'adresse IP `127.0.0.1` dans la classe `Client.java`.
@@ -111,4 +111,88 @@ Après l'exécution du client, la connexion TCP est établie avec succès sur le
 
 **Capture d'écran :**
 
-![Connexion avec adresse IP](captures/client-ip.png)
+![Connexion avec adresse IP](captures/Activité 1-1/client-ip.png)
+---
+
+# Activité 1-2 : Service de calculatrice
+
+## 1. Objectif
+
+L'objectif de cette activité est d'étendre l'application Client/Serveur développée dans l'Activité 1-1 afin d'ajouter un service de multiplication côté serveur, en utilisant les sockets TCP.
+
+## 2. Fonctionnement de l'application
+
+Le client demande à l'utilisateur de saisir un entier `x`, puis l'envoie au serveur.
+
+Le serveur reçoit cet entier, effectue la multiplication `x * 5`, puis renvoie le résultat au client.
+
+La communication est réalisée à l'aide des classes `DataInputStream` et `DataOutputStream`, qui permettent notamment de transmettre correctement les entiers négatifs.
+
+## 3. Tests de multiplication
+
+### Test avec un entier positif
+
+Le client envoie `4` au serveur. Le serveur calcule `4 * 5 = 20` et renvoie le résultat.
+
+![Client positif](captures/Activité%201-2/client-positif.png)
+
+![Serveur calcul](captures/Activité%201-2/server-calcul.png)
+
+### Test avec un entier négatif
+
+Le client envoie `-3`. Le serveur calcule `-3 * 5 = -15`.
+
+![Client négatif](captures/Activité%201-2/client-negatif.png)
+
+### Test avec zéro
+
+Dans la première version de l'application, le client envoie `0` et le serveur renvoie le résultat `0`.
+
+![Client zéro](captures/Activité%201-2/client-zero.png)
+
+## 4. Communication avec DataInputStream et DataOutputStream
+
+Les classes `DataInputStream` et `DataOutputStream` permettent de transmettre des entiers entre le client et le serveur.
+
+- `writeInt(x)` : envoie un entier.
+- `readInt()` : reçoit un entier.
+
+Ces méthodes permettent de gérer les entiers positifs, négatifs et nuls.
+
+## 5. Plusieurs calculs successifs
+
+L'application a été modifiée pour permettre au client de saisir plusieurs entiers successivement sans redémarrer la connexion.
+
+Une boucle `do...while` est utilisée dans les deux applications.
+
+Exemple de test :
+
+| Entier envoyé | Résultat reçu |
+|---------------|---------------|
+| 4             | 20            |
+| 5             | 25            |
+| 2             | 10            |
+
+![Calculs successifs](captures/Activité%201-2/calculs-successifs.png)
+
+## 6. Arrêt de la communication
+
+Lorsque l'utilisateur saisit `0`, le client envoie cette valeur au serveur.
+
+Le serveur détecte cette valeur et arrête la boucle de calcul.
+
+Les sockets sont ensuite fermées proprement des deux côtés.
+
+### Fermeture côté client
+
+![Fermeture client](captures/Activité%201-2/fermeture-client.png)
+
+### Fermeture côté serveur
+
+![Fermeture serveur](captures/Activité%201-2/fermeture-serveur.png)
+
+## 7. Conclusion
+
+Cette activité a permis d'étendre l'application Client/Serveur TCP de l'Activité 1-1 en ajoutant un service de multiplication par 5.
+
+Elle a également permis de mettre en œuvre une communication répétée entre le client et le serveur, avec une fermeture propre de la connexion lorsque l'utilisateur saisit `0`.
