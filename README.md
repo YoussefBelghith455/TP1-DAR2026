@@ -18,7 +18,7 @@ Cette commande confirme que Git est correctement installé et accessible depuis 
 
 ### Capture d'écran
 
-![Vérification de Git](captures/Activité 1-1/git-version.png)
+![Vérification de Git](captures/Activit%C3%A9%201-1/git-version.png)
 ## Étape 2 : Préparation de l'environnement Java
 
 Afin de vérifier l'installation de Java, nous avons exécuté les commandes suivantes dans le terminal Windows :
@@ -33,7 +33,7 @@ Cette version est compatible avec les exigences du TP, qui nécessite au minimum
 
 ### Capture d'écran
 
-![Vérification de Java](captures/Activité 1-1/java-version.png)
+![Vérification de Java](captures/Activit%C3%A9%201-1/java-version.png)
 ## Étape 3 : Création du serveur TCP
 
 Nous avons créé le package `serverPackage` contenant la classe `Server.java`.
@@ -48,7 +48,7 @@ Après avoir lancé le serveur, le message suivant apparaît dans la console :
 
 `Je suis un serveur en attente la connexion d'un client`
 
-![Serveur en attente](captures/Activité 1-1/server-console.png)
+![Console serveur](captures/Activit%C3%A9%201-1/server-console.png)
 
 ### Interprétation
 
@@ -67,7 +67,7 @@ Après avoir lancé le client, les messages suivants apparaissent dans la consol
 
 `je suis un client connecté`
 
-![Exécution du client](captures/Activité 1-1/client-console.png)
+![Console client](captures/Activit%C3%A9%201-1/client-console.png)
 
 ### Interprétation
 
@@ -94,7 +94,7 @@ Une fois la connexion acceptée, les sockets sont fermées et le programme serve
 
 ### Capture d'écran du serveur connecté
 
-![Serveur connecté](captures/Activité 1-1/server-connected.png)
+![Serveur connecté](captures/Activit%C3%A9%201-1/server-connected.png)
 ### Test de connexion avec une adresse IP
 
 Dans cette étape, nous avons remplacé `localhost` par l'adresse IP `127.0.0.1` dans la classe `Client.java`.
@@ -111,7 +111,7 @@ Après l'exécution du client, la connexion TCP est établie avec succès sur le
 
 **Capture d'écran :**
 
-![Connexion avec adresse IP](captures/Activité 1-1/client-ip.png)
+![Adresse IP client](captures/Activit%C3%A9%201-1/client-ip.png)
 ---
 
 # Activité 1-2 : Service de calculatrice
