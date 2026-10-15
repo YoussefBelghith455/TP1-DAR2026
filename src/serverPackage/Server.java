@@ -4,47 +4,81 @@ package serverPackage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) {
 
-        try (ServerSocket serverSocket = new ServerSocket(1234)) {
+        try {
+            InetAddress adresseServeur = InetAddress.getLocalHost();
+            InetSocketAddress adresseSocket =
+                    new InetSocketAddress(adresseServeur, 1234);
 
-            System.out.println("Serveur en attente de connexion...");
+            try (ServerSocket serverSocket = new ServerSocket()) {
 
-            try (Socket socket = serverSocket.accept();
-                 DataInputStream entree = new DataInputStream(socket.getInputStream());
-                 DataOutputStream sortie = new DataOutputStream(socket.getOutputStream())) {
+                serverSocket.bind(adresseSocket);
 
-                System.out.println("Un client est connecté");
+                System.out.println("Serveur en attente de connexion...");
+                System.out.println("Port : " + serverSocket.getLocalPort());
 
-                int x;
+                try (Socket socket = serverSocket.accept();
+                     DataInputStream entree =
+                             new DataInputStream(socket.getInputStream());
+                     DataOutputStream sortie =
+                             new DataOutputStream(socket.getOutputStream())) {
 
-                do {
-                    // Recevoir l'entier envoyé par le client
-                    x = entree.readInt();
+                    System.out.println("Un client est connecté");
 
-                    if (x != 0) {
-                        // Calculer le résultat
-                        int resultat = x * 5;
+                    int choix;
 
-                        System.out.println("Entier reçu : " + x);
-                        System.out.println("Résultat calculé : " + resultat);
+                    do {
+                        choix = entree.readInt();
 
-                        // Envoyer le résultat au client
-                        sortie.writeInt(resultat);
-                        sortie.flush();
-                    }
+                        if (choix != 0) {
+                            int x = entree.readInt();
+                            double resultat;
 
-                } while (x != 0);
+                            switch (choix) {
+                                case 1:
+                                    resultat = x + 5;
+                                    break;
 
-                System.out.println("Le client a envoyé 0.");
-                System.out.println("Fin de communication.");
+                                case 2:
+                                    resultat = x - 5;
+                                    break;
+
+                                case 3:
+                                    resultat = x * 5;
+                                    break;
+
+                                case 4:
+                                    resultat = (double) x / 5;
+                                    break;
+
+                                default:
+                                    resultat = Double.NaN;
+                                    System.out.println("Opération invalide");
+                            }
+
+                            System.out.println("Choix reçu : " + choix);
+                            System.out.println("Valeur reçue : " + x);
+                            System.out.println("Résultat calculé : " + resultat);
+
+                            sortie.writeDouble(resultat);
+                            sortie.flush();
+                        }
+
+                    } while (choix != 0);
+
+                    System.out.println("Le client a choisi de quitter.");
+                    System.out.println("Fin de communication.");
+                }
+
+                System.out.println("Sockets fermées.");
             }
-
-            System.out.println("Sockets fermées.");
 
         } catch (IOException e) {
             e.printStackTrace();

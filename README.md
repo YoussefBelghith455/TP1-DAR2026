@@ -196,3 +196,105 @@ Les sockets sont ensuite fermées proprement des deux côtés.
 Cette activité a permis d'étendre l'application Client/Serveur TCP de l'Activité 1-1 en ajoutant un service de multiplication par 5.
 
 Elle a également permis de mettre en œuvre une communication répétée entre le client et le serveur, avec une fermeture propre de la connexion lorsque l'utilisateur saisit `0`.
+# TP1 – Activité 1-3 : Amélioration du service de calculatrice
+
+## Objectif de l'activité
+
+Cette activité consiste à améliorer l'application Client/Serveur TCP développée lors de l'Activité 1-2.
+
+Deux améliorations sont demandées :
+
+1. **Connexion entre deux machines distinctes :**
+    - Utiliser `InetAddress` et `InetSocketAddress`.
+    - Configurer le serveur avec son adresse IP réelle et le port 1234.
+    - Permettre au client de se connecter à l'adresse IP du serveur.
+
+2. **Amélioration du service de calculatrice :**
+    - Afficher un menu permettant de choisir une opération.
+    - Proposer quatre opérations : addition, soustraction, multiplication et division.
+    - Envoyer le choix de l'opération et la valeur x au serveur.
+    - Effectuer le calcul côté serveur avec la constante 5.
+    - Retourner le résultat au client.
+    - Permettre plusieurs calculs successifs jusqu'au choix 0.
+
+## Étape 1 : Connexion Client/Serveur
+
+Le serveur utilise `InetAddress` et `InetSocketAddress` pour
+configurer son adresse IP locale et le port 1234.
+
+Le client demande l'adresse IP du serveur au démarrage,
+puis établit une connexion TCP à cette adresse.
+
+**Test réalisé :** connexion du client au serveur en utilisant
+l'adresse IPv4 locale du PC.
+
+**Remarque :** le test entre deux machines physiques distinctes
+n'a pas encore été réalisé.
+
+## Étape 2 : Service de calculatrice amélioré
+
+Le service de calculatrice TCP a été amélioré afin de proposer quatre opérations : addition, soustraction, multiplication et division.
+
+Le client affiche un menu permettant de choisir l'opération souhaitée et de saisir un entier x.
+
+Le choix de l'opération et la valeur x sont envoyés au serveur à l'aide de `DataOutputStream`.
+
+Le serveur effectue le calcul avec la constante 5, puis renvoie le résultat au client à l'aide de `DataOutputStream`.
+
+Le résultat est affiché côté client. Plusieurs calculs peuvent être effectués successivement jusqu'à ce que l'utilisateur choisisse 0 pour quitter.
+
+### Test 1 : Addition
+
+Valeur x = 10
+
+Calcul : 10 + 5 = 15
+
+![Test addition](captures/Activit%C3%A9%201-3/addition.png)
+
+### Test 2 : Soustraction
+
+Valeur x = 20
+
+Calcul : 20 - 5 = 15
+
+![Test soustraction](captures/Activit%C3%A9%201-3/soustraction.png)
+
+### Test 3 : Multiplication
+
+Valeur x = 6
+
+Calcul : 6 * 5 = 30
+
+![Test multiplication](captures/Activit%C3%A9%201-3/multiplication.png)
+
+### Test 4 : Division
+
+Valeur x = 7
+
+Calcul : 7 / 5 = 1.4
+
+![Test division](captures/Activit%C3%A9%201-3/division.png)
+
+### Test 5 : Fermeture de la connexion
+
+Lorsque l'utilisateur choisit 0 dans le menu, le client informe le serveur de la fin de communication et les sockets sont fermées.
+
+![Fermeture de connexion](captures/Activit%C3%A9%201-3/quitter.png)
+
+### Test 6 : Résultats côté serveur
+
+La console du serveur montre les choix reçus, les valeurs transmises par le client et les résultats des quatre opérations.
+
+Elle confirme également la fermeture des sockets à la fin de la communication.
+
+![Résultats serveur](captures/Activit%C3%A9%201-3/calculatrice-serveur.png)
+
+## Conclusion
+
+L'application Client/Serveur TCP permet désormais de réaliser quatre opérations de calcul à distance.
+
+Les classes `InetAddress` et `InetSocketAddress` sont utilisées pour gérer l'adresse IP et le port de communication.
+
+Les tests fonctionnels des quatre opérations ont été réalisés avec succès sur un seul ordinateur.
+
+La validation de la connexion entre deux machines distinctes reste à effectuer.
